@@ -34,10 +34,8 @@ class ComplexConv2D(Layer):
             layers used to perform the underlying complex convolutions.
     """
     conv_types = [
-        'real_real',
-        'real_imag',
-        'imag_real',
-        'imag_imag',
+        'real',
+        'imag',
     ]
     def __init__(self, n_filters, kernel_size, activation=None, trainable=True, name=None, dtype=None, dynamic=False, **conv_kwargs):
         super(ComplexConv2D, self).__init__(
@@ -66,8 +64,8 @@ class ComplexConv2D(Layer):
     def call(self, inputs):
         real = tf.math.real(inputs)
         imag = tf.math.imag(inputs)
-        output_real = self.convs['real_real'](real) - self.convs['imag_imag'](imag)
-        output_imag = self.convs['imag_real'](real) + self.convs['real_imag'](imag)
+        output_real = self.convs['real'](real) - self.convs['imag'](imag)
+        output_imag = self.convs['imag'](real) + self.convs['real'](imag)
         output = tf.complex(output_real, output_imag)
         output = self.activation(output)
         return output
