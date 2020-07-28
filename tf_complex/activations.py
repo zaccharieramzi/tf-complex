@@ -92,7 +92,7 @@ class ModReLU(Layer):
         This activation function currently only works in the channel last mode.
     """
     def __init__(self, bias_initializer=None, bias_regularizer=None, bias_constraint=None, **kwargs):
-        super(ModReLU, self).__init__(self, **kwargs)
+        super(ModReLU, self).__init__(**kwargs)
         if bias_initializer is None:
             bias_initializer = tf.constant_initializer(0.0)
         self.bias_initializer = bias_initializer
@@ -132,7 +132,7 @@ class ComplexActivation(Layer):
         'linear': linear
     }
     def __init__(self, activation, **kwargs):
-        super(ComplexActivation, self).__init__(self, **kwargs)
+        super(ComplexActivation, self).__init__(**kwargs)
         if isinstance(activation, str):
             try:
                 self.activation = ComplexActivation.activation_key_to_fun[activation]
