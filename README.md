@@ -24,6 +24,6 @@ conv = ComplexConv2D(
   16,
   3,
   padding='same',
-  actiation='crelu',
+  activation='crelu',
 )
 ```
