@@ -80,7 +80,8 @@ class ModReLU(Layer):
     Caveats:
         This activation function currently only works in the channel last mode.
     """
-    def __init__(self, bias_initializer=None, bias_regularizer=None, bias_constraint=None):
+    def __init__(self, bias_initializer=None, bias_regularizer=None, bias_constraint=None, **kwargs):
+        super(ModReLU, self).__init__(self, **kwargs)
         if bias_initializer is None:
             bias_initializer = tf.constant_initializer(0.0)
         self.bias_initializer = bias_initializer
@@ -118,7 +119,8 @@ class ComplexActivation(Layer):
         'cardioid': cardioid,
         'crelu': crelu,
     }
-    def __init__(self, activation):
+    def __init__(self, activation, **kwargs):
+        super(ComplexActivation, self).__init__(self, **kwargs)
         if isinstance(activation, str):
             try:
                 self.activation = ComplexActivation.activation_key_to_fun[activation]
