@@ -4,6 +4,27 @@ from tensorflow.keras.layers import Layer, Conv2D
 from .activations import ComplexActivation
 
 class ComplexConv2D(Layer):
+    r"""Complex convolution.
+
+    This is defined in [C2020].
+    Parameters:
+        n_filters (int): the equivalent number of filters used for a real
+            convolution. As per the convention defined in the code for [C2020],
+            this means that each convolution will actually have `n_filters // 2`
+            filters.
+        kernel_size (int): the size of the convolution kernels.
+        activation (str or callable or None): the activation function to use for
+            this complex convolution. Must be defined via tf_complex.activations
+            is using a string. If None, the linear activation function is used.
+            Defaults to None.
+        trainable (bool): whether the layer's variables should be trainable.
+            Defaults to True.
+        name (str): name of the layer. Defaults to None.
+        dtype (tf.dtype or str): the dtype of the layer's computations and
+            weights. Defaults to None.
+        dynamic (bool): if the layer is to be run eargerly. Defaults to False.
+        **conv_kwargs: keyword arguments for the convolutions initializations.
+    """
     conv_types = [
         'real_real',
         'real_imag',
