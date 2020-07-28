@@ -4,6 +4,7 @@
 
 This package was inspired by the work of Elizabeth Cole et al.: [Image Reconstruction using an Unrolled DL Architecture including Complex-Valued Convolution and Activation Functions](https://arxiv.org/abs/2004.01738).
 Please cite their work appropriately if you use this package.
+The code for their work is available [here](https://github.com/MRSRL/complex-networks-release).
 
 ## Installation
 
