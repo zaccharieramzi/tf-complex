@@ -105,3 +105,33 @@ class ModReLU(Layer):
         i = tf.constant(1j)
         output = tf.cast(output_modulus, inputs.dtype) * tf.exp(i * phase)
         return output
+
+class ComplexActivation(Layer):
+    """Complex activation function.
+
+    This mimics the tf.keras.layers.Actvation class, allowing to select an
+    activation function with a string key or initializing it with a custom
+    callable.
+    """
+    activation_key_to_fun = {
+        'zrelu': zrelu,
+        'cardioid': cardioid,
+        'crelu': crelu,
+    }
+    def __init__(self, activation):
+        if isinstance(activation, str):
+            try:
+                self.activation = ComplexActivation.activation_key_to_fun[activation]
+            except KeyError:
+                raise ValueError(
+                    f'{activation} is not a built-in complex activation function, \
+                    chose from {ComplexActivation.activation_key_to_fun.keys()}'
+                )
+        elif callable(activation):
+            self.activation = activation
+        else:
+            TypeError(
+                'Could not interpret activation function identifier: {}'.format(
+                    repr(activation)
+                )
+            )
