@@ -111,10 +111,10 @@ class ModReLU(Layer):
         )
 
     def call(self, inputs):
-        phase = tf.math.angle(inputs)
+        phase = tf.cast(tf.math.angle(inputs), inputs.dtype)
         modulus = tf.abs(inputs)
         output_modulus = tf.nn.relu(modulus + self.bias)
-        i = tf.constant(1j)
+        i = tf.constant(1j, dtype=inputs.dtype)
         output = tf.cast(output_modulus, inputs.dtype) * tf.exp(i * phase)
         return output
 
