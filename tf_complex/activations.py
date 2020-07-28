@@ -124,6 +124,16 @@ class ComplexActivation(Layer):
     This mimics the tf.keras.layers.Actvation class, allowing to select an
     activation function with a string key or initializing it with a custom
     callable.
+
+    Parameters:
+        - activation (str or callable or None): if string, then it's the
+            identifier to an implemented complex activation function. If callable
+            then it's an activation function taking as input a complex valued
+            tensor and returning a complex valued tensor of the same shape.
+            If None, the linear activation function is chosen.
+
+    Attributes:
+        - activation (callable): the activation function.
     """
     activation_key_to_fun = {
         'zrelu': zrelu,
