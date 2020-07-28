@@ -8,7 +8,7 @@ References
     https://arxiv.org/abs/2004.01738
 """
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __author__ = 'Zaccharie Ramzi'
 __author_email__ = 'zaccharie.ramzi@inria.fr'
 __license__ = 'MIT'
