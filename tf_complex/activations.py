@@ -61,7 +61,7 @@ def cardioid(x):
     """
     with tf.name_scope('cardioid'):
         phase = tf.math.angle(x)
-        output = 0.5 * x * (1 + tf.cos(phase))
+        output = 0.5 * x * tf.cast((1 + tf.cos(phase)), x.dtype)
     return output
 
 
@@ -103,5 +103,5 @@ class ModReLU(Layer):
         modulus = tf.abs(inputs)
         output_modulus = tf.nn.relu(modulus + self.bias)
         i = tf.constant(1j)
-        output = output_modulus * tf.exp(i * phase)
+        output = tf.cast(output_modulus, inputs.dtype) * tf.exp(i * phase)
         return output
