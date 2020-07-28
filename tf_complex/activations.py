@@ -135,3 +135,7 @@ class ComplexActivation(Layer):
                     repr(activation)
                 )
             )
+
+    def call(self, inputs):
+        output = self.activation(inputs)
+        return output
