@@ -24,6 +24,14 @@ class ComplexConv2D(Layer):
             weights. Defaults to None.
         dynamic (bool): if the layer is to be run eargerly. Defaults to False.
         **conv_kwargs: keyword arguments for the convolutions initializations.
+
+    Attributes:
+        n_filters_total (int): the number of filters in total for the
+            convolutions. Corresponds to the parameter `n_filters`.
+        activation (tf_complex.activations.ComplexActivation): the activation
+            function.
+        convs (dict str -> tf.keras.layers.Conv2D): the different convolution
+            layers used to perform the underlying complex convolutions.
     """
     conv_types = [
         'real_real',
