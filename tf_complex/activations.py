@@ -4,6 +4,17 @@ import tensorflow as tf
 from tensorflow.keras.layers import Layer
 
 
+def linear(x):
+    """No activation, activation function.
+
+    Arguments:
+        - x (tf.Tensor): a complex-valued tensor.
+
+    Returns:
+        - tf.Tensor: a complex-valued tensor.
+    """
+    return x
+
 def zrelu(x):
     r"""zReLU activation function.
 
@@ -118,6 +129,7 @@ class ComplexActivation(Layer):
         'zrelu': zrelu,
         'cardioid': cardioid,
         'crelu': crelu,
+        'linear': linear
     }
     def __init__(self, activation, **kwargs):
         super(ComplexActivation, self).__init__(self, **kwargs)
@@ -129,6 +141,8 @@ class ComplexActivation(Layer):
                     f'{activation} is not a built-in complex activation function, \
                     chose from {ComplexActivation.activation_key_to_fun.keys()}'
                 )
+        elif activation is None:
+            self.activation = linear
         elif callable(activation):
             self.activation = activation
         else:
