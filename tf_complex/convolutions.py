@@ -37,7 +37,18 @@ class ComplexConv2D(Layer):
         'real',
         'imag',
     ]
-    def __init__(self, n_filters, kernel_size, activation=None, trainable=True, name=None, dtype=None, dynamic=False, **conv_kwargs):
+    def __init__(
+            self,
+            n_filters,
+            kernel_size,
+            activation=None,
+            use_bias=True,
+            trainable=True,
+            name=None,
+            dtype=None,
+            dynamic=False,
+            **conv_kwargs,
+        ):
         super(ComplexConv2D, self).__init__(
             trainable=trainable,
             name=name,
@@ -45,6 +56,7 @@ class ComplexConv2D(Layer):
             dynamic=dynamic,
         )
         self.activation = ComplexActivation(activation)
+        self.use_bias = use_bias
         self.n_filters_total = n_filters
         self.kernel_size = kernel_size
         conv_kwargs.update(dict(
@@ -52,6 +64,7 @@ class ComplexConv2D(Layer):
             # established here:
             # https://github.com/MRSRL/complex-networks-release/blob/master/complex_utils.py#L13
             kernel_size=self.kernel_size,
+            use_bias=False,
             activation=None,
         ))
         self.convs = {
@@ -60,6 +73,16 @@ class ComplexConv2D(Layer):
                 **conv_kwargs,
             ) for conv_type in ComplexConv2D.conv_types
         }
+        if self.use_bias:
+            self.biases = {
+                dense_type: self.add_weight(
+                    name=f'{dense_type}_dense_bias',
+                    shape=[self.n_filters_total // 2],
+                    initializer=conv_kwargs.get('bias_initializer', 'zeros'),
+                    regularizer=conv_kwargs.get('bias_regularizer', None),
+                    constraint=conv_kwargs.get('bias_constraint', None),
+                ) for dense_type in ComplexConv2D.conv_types
+            }
 
     def call(self, inputs):
         real = tf.math.real(inputs)
