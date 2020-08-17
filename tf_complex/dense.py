@@ -54,12 +54,12 @@ class ComplexDense(Layer):
         self.units = units
         self.use_bias = use_bias
         dense_kwargs.update(dict(
+            units=self.units,
             use_bias=False,
             activation=None,
         ))
         self.denses = {
             dense_type: Dense(
-                self.units,
                 name=f'{dense_type}_dense',
                 **dense_kwargs,
             ) for dense_type in ComplexDense.dense_types
