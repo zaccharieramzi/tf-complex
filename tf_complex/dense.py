@@ -59,6 +59,7 @@ class ComplexDense(Layer):
         ))
         self.denses = {
             dense_type: Dense(
+                self.units,
                 name=f'{dense_type}_dense',
                 **dense_kwargs,
             ) for dense_type in ComplexDense.dense_types
@@ -68,9 +69,9 @@ class ComplexDense(Layer):
                 dense_type: self.add_weight(
                     name=f'{dense_type}_dense_bias',
                     shape=[self.units],
-                    initializer=dense_kwargs['bias_initializer'],
-                    regularizer=dense_kwargs['bias_regularizer'],
-                    constraint=dense_kwargs['bias_constraint'],
+                    initializer=dense_kwargs.get('bias_initializer', 'zeros'),
+                    regularizer=dense_kwargs.get('bias_regularizer', None),
+                    constraint=dense_kwargs.get('bias_constraint', None),
                 ) for dense_type in ComplexDense.dense_types
             }
 
